@@ -1,0 +1,65 @@
+{
+    "name": "org_heigl/keyprinter",
+    "description": "Print snippets of GPG-Keys to bring to keysigning-parties",
+    "type": "project",
+    "homepage": "https://github.com/heiglandreas/keyprinter",
+    "license": "MIT",
+    "keywords": [
+        "gpg",
+        "pgp",
+        "keysigning",
+        "party"
+    ],
+    "config": {
+        "sort-packages": true
+    },
+    "support": {
+        "issues": "https://github.com/heiglandreas/keyprinter/issues",
+        "source": "https://github.com/heiglandreas/keyprinter",
+        "rss": "https://github.com/heiglandreas/keyprinter/releases.atom"
+    },
+    "require": {
+        "php": "^7.2",
+        "bitexpert/disco": "^0.10.0",
+        "zendframework/zend-component-installer": "^2.1.1",
+        "zendframework/zend-config-aggregator": "^1.0",
+        "zendframework/zend-diactoros": "^1.7.1",
+        "zendframework/zend-expressive": "^3.0.1",
+        "zendframework/zend-expressive-fastroute": "^3.0",
+        "zendframework/zend-expressive-helpers": "^5.0",
+        "zendframework/zend-expressive-twigrenderer": "^2.0",
+        "zendframework/zend-stdlib": "^3.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.0.1",
+        "roave/security-advisories": "dev-master",
+        "squizlabs/php_codesniffer": "^3.0",
+        "zendframework/zend-expressive-tooling": "^1.0",
+        "zfcampus/zf-development-mode": "^3.1",
+        "filp/whoops": "^2.1.12"
+    },
+    "autoload": {
+        "psr-4": {
+            "Org_Heigl\\KeyPrinter\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Org_Heigl\\KeyPrinterTest\\": "tests/"
+        }
+    },
+    "scripts": {
+         "check": [
+            "@cs-check",
+            "@test",
+            "@analyze"
+        ],
+        "analyze": "phpstan analyze -l max -c ./phpstan.installer.neon ./src ./config",
+        "clear-config-cache": "php bin/clear-config-cache.php",
+        "cs-check": "phpcs",
+        "cs-fix": "phpcbf",
+        "serve": "php -S 0.0.0.0:8080 -t public/",
+        "test": "phpunit --colors=always",
+        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
+    }
+}
