@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use Org_Heigl\KeyPrinter\Handler\HomePageHandler;
+use Org_Heigl\KeyPrinter\Handler\KeyPrintHandler;
+use Org_Heigl\KeyPrinter\Handler\KeySearchHandler;
 use Org_Heigl\KeyPrinter\Handler\PingHandler;
 use Psr\Container\ContainerInterface;
 use Zend\Expressive\Application;
@@ -36,5 +38,7 @@ use Zend\Expressive\MiddlewareFactory;
  */
 return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container) : void {
     $app->get('/', HomePageHandler::class, 'home');
+    $app->get('/key/print/{keyserver}/{keyid}', KeyPrintHandler::class, 'key.print');
+    $app->get('/key/search', KeySearchHandler::class, 'key.search');
     $app->get('/api/ping', PingHandler::class, 'api.ping');
 };

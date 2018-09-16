@@ -26,11 +26,12 @@
                     </button>
                     <!-- Brand -->
                     <a class="navbar-brand" href="{{ path('home') }}">
-                        <img src="https://framework.zend.com/images/logos/zf-logo-mark.png" alt="Zend Expressive" height="28" />
+                        <i class="fa fa-user-lock"></i>
+                        KeyPrinter
                     </a>
                 </div>
                 <!-- Links -->
-                <div class="collapse navbar-collapse" id="navbarCollapse">
+                {# <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
                             <a href="https://docs.zendframework.com/zend-expressive" target="_blank" class="nav-link">
@@ -48,7 +49,7 @@
                             </a>
                         </li>
                     </ul>
-                </div>
+                </div> #}
             </div>
         </nav>
     </header>
@@ -64,7 +65,7 @@
             <hr />
             {% block footer %}
                 <p>
-                    &copy; 2005 - {{ "now"|date("Y") }} by Zend Technologies Ltd. All rights reserved.
+                    &copy; 2018 - {{ "now"|date("Y") }} by <a href="https://andreas.heigl.org">Andreas Heigl</a>. All rights reserved.
                 </p>
             {% endblock %}
         </div>

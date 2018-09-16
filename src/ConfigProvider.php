@@ -9,12 +9,24 @@ use bitExpert\Disco\Annotations\Configuration;
 use bitExpert\Disco\Annotations\Bean;
 use bitExpert\Disco\Annotations\Parameter;
 use bitExpert\Disco\Annotations\Alias;
+use Org_Heigl\KeyPrinter\Filter\ChunkSplit;
+use Org_Heigl\KeyPrinter\Filter\HexFormat;
 use Org_Heigl\KeyPrinter\Handler\HomePageHandler;
+use Org_Heigl\KeyPrinter\Handler\KeyPrintHandler;
+use Org_Heigl\KeyPrinter\Handler\KeySearchHandler;
 use Org_Heigl\KeyPrinter\Handler\PingHandler;
+use Org_Heigl\KeyPrinter\Service\FetchGpgKeyDetails;
 use Twig_Environment;
 use Twig_Extension;
+use Whoops\Handler\PrettyPageHandler;
+use Whoops\Run;
+use Zend\Expressive\Container\WhoopsErrorResponseGeneratorFactory;
+use Zend\Expressive\Container\WhoopsFactory;
+use Zend\Expressive\Container\WhoopsPageHandlerFactory;
 use Zend\Expressive\Helper\ServerUrlHelper;
 use Zend\Expressive\Helper\UrlHelper;
+use Zend\Expressive\Middleware\ErrorResponseGenerator;
+use Zend\Expressive\Middleware\WhoopsErrorResponseGenerator;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 use Zend\Expressive\Twig\TwigEnvironmentFactory;
@@ -105,6 +117,49 @@ class ConfigProvider
 
     /**
      * @Bean({"aliases" = {
+     *     @Alias({"name" = "Org_Heigl\KeyPrinter\Handler\KeyPrintHandler"})
+     * }})
+     */
+    public function getKeyPrintHandler() : KeyPrintHandler
+    {
+        $container = BeanFactoryRegistry::getInstance();
+        return new KeyPrintHandler(
+            $container->get(TemplateRendererInterface::class),
+            $container->get(FetchGpgKeyDetails::class)
+        );
+    }
+
+    /**
+     * @Bean({"aliases" = {
+     *     @Alias({"name" = "Org_Heigl\KeyPrinter\Handler\KeySearchHandler"})
+     * }})
+     */
+    public function getKeySearchHandler() : KeySearchHandler
+    {
+        $container = BeanFactoryRegistry::getInstance();
+
+        return new KeySearchHandler(
+            $container->get(UrlHelper::class),
+            $container->get(ServerUrlHelper::class)
+        );
+    }
+
+    /**
+     * @Bean({"aliases" = {
+     *     @Alias({"name" = "Org_Heigl\KeyPrinter\Service\FetchGpgKeyDetails"})
+     * }})
+     */
+    public function getFetchGpgKeyHandler() : FetchGpgKeyDetails
+    {
+        $container = BeanFactoryRegistry::getInstance();
+
+        return new FetchGpgKeyDetails();
+    }
+
+
+
+    /**
+     * @Bean({"aliases" = {
      *     @Alias({"name" = "Zend\Expressive\Template\TemplateRendererInterface"}),
      *     @Alias({"name" = "Twig_Renderer"})
      * }})
@@ -125,7 +180,12 @@ class ConfigProvider
     {
         $factory = new TwigEnvironmentFactory();
 
-        return $factory(BeanFactoryRegistry::getInstance());
+        $env = $factory(BeanFactoryRegistry::getInstance());
+
+        new ChunkSplit($env);
+        new HexFormat($env);
+
+        return $env;
     }
 
 
@@ -150,6 +210,42 @@ class ConfigProvider
     public function getTwigExtension2() : TwigExtension
     {
         $factory = new TwigExtensionFactory();
+
+        return $factory(BeanFactoryRegistry::getInstance());
+    }
+
+    /**
+     * @Bean({"aliases" = {
+     *     @Alias({"name" = "Zend\Expressive\Middleware\ErrorResponseGenerator"})
+     * }})
+     */
+    public function getErrorResponseGenerator() : WhoopsErrorResponseGenerator
+    {
+        $factory = new WhoopsErrorResponseGeneratorFactory();
+
+        return $factory(BeanFactoryRegistry::getInstance());
+    }
+
+    /**
+     * @Bean({"aliases" = {
+     *     @Alias({"name" = "Whoops\Run"})
+     * }})
+     */
+    public function getWhoops() : Run
+    {
+        $factory = new WhoopsFactory();
+
+        return $factory(BeanFactoryRegistry::getInstance());
+    }
+
+    /**
+     * @Bean({"aliases" = {
+     *     @Alias({"name" = "Whoops\Handler\PrettyPageHandler"})
+     * }})
+     */
+    public function getWhoopsPgeHandler() : PrettyPageHandler
+    {
+        $factory = new WhoopsPageHandlerFactory();
 
         return $factory(BeanFactoryRegistry::getInstance());
     }

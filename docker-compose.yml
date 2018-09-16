@@ -1,0 +1,18 @@
+version: '2'
+services:
+  web:
+    image: nginx:latest
+    ports:
+    - "8080:80"
+    volumes:
+    - .:/var/www
+    - ./.docker/nginx/site.conf:/etc/nginx/conf.d/site.conf
+    links:
+    - php
+  php:
+    image: keyprinter/php
+    build:
+      context: .
+      dockerfile: Dockerfile.php
+    volumes:
+    - .:/var/www

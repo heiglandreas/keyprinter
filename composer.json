@@ -20,6 +20,7 @@
     },
     "require": {
         "php": "^7.2",
+        "ext-gnupg" : "*",
         "bitexpert/disco": "^0.10.0",
         "zendframework/zend-component-installer": "^2.1.1",
         "zendframework/zend-config-aggregator": "^1.0",

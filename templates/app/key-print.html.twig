@@ -1,0 +1,56 @@
+{% extends '@layout/default.html.twig' %}
+
+{% block title %}Print Key{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        @media print{
+            body {
+                font-size: 9pt;
+            }
+            .col-sm {
+                page-break-after: auto;
+                page-break-before: auto;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    {% for i in 0..6 %}
+    <div class="row">
+        {% for k in 0..1 %}
+        <div class="col-sm my-3">
+            <table class="w-100 table-bordered">
+                <tr>
+                    <th>Key-ID</th>
+                    <td>{{ uid | hexformat }}</td>
+                </tr>
+                <tr>
+                    <th>Owner</th>
+                    <td>{{ name }} &lt;{{ email }}&gt;</td>
+                </tr>
+                <tr>
+                    <th>Fingerprint</th>
+                    <td>{{ fingerprint| chunksplit(20, "\n\r") | hexformat | nl2br }}</td>
+                </tr>
+                <tr>
+                    <th>Exires</th>
+                    <td>{{ expires | date('c') }}</td>
+                </tr>
+                <tr>
+                    <th>Key-Info matches?</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>User-ID matches?</th>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+{% endblock %}
