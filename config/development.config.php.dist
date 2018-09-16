@@ -22,9 +22,14 @@
 
 declare(strict_types=1);
 
+use Org_Heigl\KeyPrinter\LocalConfigProvider;
 use Zend\ConfigAggregator\ConfigAggregator;
 
 return [
     'debug' => true,
     ConfigAggregator::ENABLE_CACHE => false,
+    'di' => [
+        'cache' => sys_get_temp_dir(),
+        'class' => LocalConfigProvider::class,
+    ],
 ];

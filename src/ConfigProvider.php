@@ -16,6 +16,7 @@ use Org_Heigl\KeyPrinter\Handler\KeyPrintHandler;
 use Org_Heigl\KeyPrinter\Handler\KeySearchHandler;
 use Org_Heigl\KeyPrinter\Handler\PingHandler;
 use Org_Heigl\KeyPrinter\Service\FetchGpgKeyDetails;
+use Org_Heigl\KeyPrinter\Service\SearchForGpgKeys;
 use Twig_Environment;
 use Twig_Extension;
 use Zend\Expressive\Helper\ServerUrlHelper;
@@ -132,7 +133,9 @@ class ConfigProvider
 
         return new KeySearchHandler(
             $container->get(UrlHelper::class),
-            $container->get(ServerUrlHelper::class)
+            $container->get(ServerUrlHelper::class),
+            new SearchForGpgKeys(),
+            $container->get(TemplateRendererInterface::class)
         );
     }
 

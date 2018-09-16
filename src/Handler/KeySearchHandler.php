@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Org_Heigl\KeyPrinter\Handler;
 
 use Org_Heigl\KeyPrinter\Service\FetchGpgKeyDetails;
+use Org_Heigl\KeyPrinter\Service\SearchForGpgKeys;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -26,25 +27,44 @@ class KeySearchHandler implements RequestHandlerInterface
 
     private $serverUrlHelper;
 
+    private $searcher;
+
+    private $template;
+
     public function __construct(
         UrlHelper $urlHelper,
-        ServerUrlHelper $serverUrlHelper
+        ServerUrlHelper $serverUrlHelper,
+        SearchForGpgKeys $searcher,
+        Template\TemplateRendererInterface $template
     ) {
         $this->urlHelper = $urlHelper;
         $this->serverUrlHelper = $serverUrlHelper;
+        $this->searcher = $searcher;
+        $this->template = $template;
     }
 
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
         $query = $request->getQueryParams();
 
-        $parameters = [
-            'keyserver' => urlencode($query['keyserver']),
-            'keyid'     => urlencode($query['keyid']),
-        ];
+        $results = ($this->searcher)($query['keyserver'], $query['keyid']);
 
-        $url = $this->urlHelper->generate('key.print', $parameters);
+        if (count($results) === 1) {
+            $parameters = [
+                'keyserver' => urlencode($query['keyserver']),
+                'keyid'     => urlencode($results[0]['keyid']),
+            ];
+            $url        = $this->urlHelper->generate('key.print', $parameters);
 
-        return new RedirectResponse($this->serverUrlHelper->generate($url));
+            return new RedirectResponse($this->serverUrlHelper->generate($url));
+        }
+
+        return new HtmlResponse($this->template->render('app::key-search', [
+            'keys' => $results,
+            'keyserver' => $query['keyserver'],
+            'searchstring' => $query['keyid'],
+        ]));
+
+
     }
 }

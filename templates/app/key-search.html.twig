@@ -1,0 +1,44 @@
+{% extends '@layout/default.html.twig' %}
+
+{% block title %}Print Key{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        @media print{
+            body {
+                font-size: 9pt;
+            }
+            .col-sm {
+                page-break-after: auto;
+                page-break-before: auto;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron">
+        <h2>Your search for "{{ searchstring }}"</h2>
+        <p>Your search for <strong>{{ searchstring }}</strong> on the keyserver {{ keyserver }} returned the followong results</p>
+        <p>Should the key you are looking for not be in the list, <a href="{{ path('home') }}">try a different search</a>.</p>
+    </div>
+    <div class="row">
+        <div class="list-group col-sm">
+        {% for key in keys %}
+            <a class="list-group-item list-group-item-action flex-column align-items-start" href="{{ path('key.print', {'keyserver':keyserver,'keyid':key.keyid}) }}">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5>{{ key.keyid }}</h5>
+                    <small>{{ key.size }}/{{ key.type }}</small>
+                </div>
+                <ul>
+                {% for user in key.users %}
+                    <li>{{ user }}</li>
+                {% endfor %}
+                </ul>
+                <small>created {{ key.created }}{%  if key.expires is defined %}, expires: {{ key.expires }}{% endif %}</small>
+            </a>
+        {% endfor %}
+        </div>
+    </div>
+{% endblock %}

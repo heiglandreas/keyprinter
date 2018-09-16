@@ -56,4 +56,24 @@ class LocalConfigProvider extends ConfigProvider
 
         return $factory(BeanFactoryRegistry::getInstance());
     }
+
+    /**
+     * @Bean({"aliases" = {
+     *     @Alias({"name" = "Zend\Expressive\Whoops"})
+     * }})
+     */
+    public function getZendExpressiveWhoops() : Run
+    {
+        return (new WhoopsFactory())(BeanFactoryRegistry::getInstance());
+    }
+    /**
+     * @Bean({"aliases" = {
+     *     @Alias({"name" = "Zend\Expressive\WhoopsPageHandler"})
+     * }})
+     */
+    public function getZendExpressiveWhoopsPageHandler() : PrettyPageHandler
+    {
+        return (new WhoopsPageHandlerFactory())(BeanFactoryRegistry::getInstance());
+    }
+
 }
