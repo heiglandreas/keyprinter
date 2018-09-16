@@ -18,21 +18,13 @@ use Org_Heigl\KeyPrinter\Handler\PingHandler;
 use Org_Heigl\KeyPrinter\Service\FetchGpgKeyDetails;
 use Twig_Environment;
 use Twig_Extension;
-use Whoops\Handler\PrettyPageHandler;
-use Whoops\Run;
-use Zend\Expressive\Container\WhoopsErrorResponseGeneratorFactory;
-use Zend\Expressive\Container\WhoopsFactory;
-use Zend\Expressive\Container\WhoopsPageHandlerFactory;
 use Zend\Expressive\Helper\ServerUrlHelper;
 use Zend\Expressive\Helper\UrlHelper;
-use Zend\Expressive\Middleware\ErrorResponseGenerator;
-use Zend\Expressive\Middleware\WhoopsErrorResponseGenerator;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 use Zend\Expressive\Twig\TwigEnvironmentFactory;
 use Zend\Expressive\Twig\TwigExtension;
 use Zend\Expressive\Twig\TwigExtensionFactory;
-use Zend\Expressive\Twig\TwigRenderer;
 use Zend\Expressive\Twig\TwigRendererFactory;
 
 /**
@@ -210,42 +202,6 @@ class ConfigProvider
     public function getTwigExtension2() : TwigExtension
     {
         $factory = new TwigExtensionFactory();
-
-        return $factory(BeanFactoryRegistry::getInstance());
-    }
-
-    /**
-     * @Bean({"aliases" = {
-     *     @Alias({"name" = "Zend\Expressive\Middleware\ErrorResponseGenerator"})
-     * }})
-     */
-    public function getErrorResponseGenerator() : WhoopsErrorResponseGenerator
-    {
-        $factory = new WhoopsErrorResponseGeneratorFactory();
-
-        return $factory(BeanFactoryRegistry::getInstance());
-    }
-
-    /**
-     * @Bean({"aliases" = {
-     *     @Alias({"name" = "Whoops\Run"})
-     * }})
-     */
-    public function getWhoops() : Run
-    {
-        $factory = new WhoopsFactory();
-
-        return $factory(BeanFactoryRegistry::getInstance());
-    }
-
-    /**
-     * @Bean({"aliases" = {
-     *     @Alias({"name" = "Whoops\Handler\PrettyPageHandler"})
-     * }})
-     */
-    public function getWhoopsPgeHandler() : PrettyPageHandler
-    {
-        $factory = new WhoopsPageHandlerFactory();
 
         return $factory(BeanFactoryRegistry::getInstance());
     }
