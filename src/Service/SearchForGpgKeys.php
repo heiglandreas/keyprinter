@@ -24,7 +24,7 @@ class SearchForGpgKeys
             escapeshellarg($server),
             escapeshellarg($keyid)
         ), $result, $return);
-        
+
         return $this->parseSearchOutput($result);
     }
 
