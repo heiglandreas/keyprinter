@@ -18,16 +18,16 @@ class FetchGpgKeyDetails
 {
     public function __invoke($server, $keyid)
     {
-        $importCommand = 'gpg  -vvvv --keyserver-options=debug --batch --yes --always-trust --keyserver %1$s --recv-keys %2$s &2>1';
+        $importCommand = 'gpg2 -vvvv --keyserver-options=debug --batch --yes --always-trust --keyserver %1$s --recv-keys %2$s 2>&1';
         exec(sprintf(
             $importCommand,
             escapeshellarg($server),
             escapeshellarg($keyid)
         ), $result, $return);
 
-        error_log($return);
-        error_log(print_r($result, true));
         if ($return !== 0) {
+            error_log($return);
+            error_log(print_r($result, true));
             throw new UnexpectedValueException(implode ("\n", $result));
         }
 
@@ -57,10 +57,10 @@ class FetchGpgKeyDetails
             $infos['expires'] = new DateTimeImmutable('@' . $item['expires']);
         }
 
-        $removeCommand = 'gpg --batch --yes --delete-key %1$s';
+        $removeCommand = 'gpg2 --batch --yes --delete-key %1$s';
         exec(sprintf(
             $removeCommand,
-            $keyid
+            escapeshellarg($keyid)
         ), $result, $return);
         if ($return !== 0) {
             throw new UnexpectedValueException(implode ("\n", $result));

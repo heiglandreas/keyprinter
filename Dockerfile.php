@@ -6,4 +6,6 @@ RUN apt-get update && apt-get install -y \
 RUN pecl install gnupg \
     && docker-php-ext-enable gnupg
 
+RUN ln -s /usr/bin/gpg /usr/bin/gpg2
+
 
