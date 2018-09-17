@@ -61,36 +61,30 @@
     </div>
 
     <footer class="app-footer">
-        <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-bottom" role="navigation">
-        <div class="container">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-bottom " style="font-size:0.8rem;" role="navigation">
             <div class="navbar-header">
-            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="#navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    &copy; 2018 - {{ "now"|date("Y") }} by <a href="https://andreas.heigl.org">Andreas Heigl</a>. All rights reserved.
-                </li>
-                {#<li class="nav-item">
-                    <a href="https://github.com/zendframework/zend-expressive" target="_blank" class="nav-link">
-                        <i class="fa fa-wrench"></i> Contribute
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ path('api.ping') }}" class="nav-link">
-                        Ping Test
-                    </a>
-                </li>#}
-            </ul>
-        </div>
-            {% block footer %}
-                <p>
-
-                </p>
-            {% endblock %}
-        </div>
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapseBottom" aria-controls="#navbarCollapseBottom" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarCollapseBottom">
+                <span class="navbar-text">&copy; 2018 - {{ "now"|date("Y") }} by <a href="https://andreas.heigl.org">Andreas Heigl</a></span>
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://github.com/heiglandreas/keyprinter"><i class="fab fa-github"></i> Github</a>
+                    </li>
+                    {#<li class="nav-item">
+                        <a href="https://github.com/zendframework/zend-expressive" target="_blank" class="nav-link">
+                            <i class="fa fa-wrench"></i> Contribute
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ path('api.ping') }}" class="nav-link">
+                            Ping Test
+                        </a>
+                    </li>#}
+                </ul>
+            </div>
         </nav>
     </footer>
 
