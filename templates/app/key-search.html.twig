@@ -26,7 +26,7 @@
     <div class="row">
         <div class="list-group col-sm">
         {% for key in keys %}
-            <a class="list-group-item list-group-item-action flex-column align-items-start" href="{{ path('key.print', {'keyserver':keyserver,'keyid':key.keyid}) }}">
+            <a class="list-group-item list-group-item-action flex-column align-items-start {% if key.expires is defined and key.expires | date('Y-m-d') <  "now" | date('Y-m-d') %} list-group-item-danger{% endif %}" href="{{ path('key.print', {'keyserver':keyserver,'keyid':key.keyid}) }}">
                 <div class="d-flex w-100 justify-content-between">
                     <h5>{{ key.keyid }}</h5>
                     <small>{{ key.size }}/{{ key.type }}</small>
@@ -36,7 +36,7 @@
                     <li>{{ user }}</li>
                 {% endfor %}
                 </ul>
-                <small>created {{ key.created }}{%  if key.expires is defined %}, expires: {{ key.expires }}{% endif %}</small>
+                <small>created {{ key.created | date('d.m.Y') }}{%  if key.expires is defined %}, expires: {{ key.expires | date('d.m.Y') }}{% endif %}</small>
             </a>
         {% endfor %}
         </div>

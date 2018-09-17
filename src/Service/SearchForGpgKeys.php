@@ -10,6 +10,7 @@
 namespace Org_Heigl\KeyPrinter\Service;
 
 use DateTimeImmutable;
+use DateTimeZone;
 use Exception;
 use gnupg;
 use UnexpectedValueException;
@@ -44,9 +45,9 @@ class SearchForGpgKeys
                 $current['size'] = $result[1];
                 $current['type'] = $result[2];
                 $current['keyid'] = $result[3];
-                $current['created'] = $result[4];
+                $current['created'] = new DateTimeImmutable($result[4] . ' 12:00:00', new DateTimeZone('UTC'));
                 if (isset($result[5])) {
-                    $current['expires'] = $result[5];
+                    $current['expires'] = new DateTimeImmutable($result[5] . ' 12:00:00', new DateTimeZone('UTC'));
                 }
                 $results[] = $current;
             }
