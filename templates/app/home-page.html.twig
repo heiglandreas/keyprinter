@@ -5,34 +5,60 @@
 {% block content %}
     <div class="jumbotron">
         <h1>Welcome to the KeyPrinter</h1>
-        <p>
+        {#<p>
             So! You want to go to a key-signing party?
         </p><p>
             Congratulations!
-        </p><p>
+        </p>#}<p>
             This tool can create a sheet with information from your key that
             you can then distribute at the signing-party to other people so they
-            can remember your key-information and whether they checkd your ID to
+            can remember your key-information and whether they checked your ID to
             verify you as the owner of the key.
-        </p><p>
+        </p>{#<p>
             Don't forget to bring an photo-ID with you to the signing party!
-        </p>
+        </p>#}
     </div>
 
-    <div class="row justify-content-center">
-        <div class="col-sm-4 align-self-center">
-        <form class="form-signin" data-op-form-id="0" method="GET" action="{{ path('key.search') }}">
-            <h1 class="h3 mb-3 font-weight-normal">Your KeyData</h1>
-            <label for="keyserver" class="sr-only"></label>
-            <select name="keyserver" id="keyserver" class="form-control" required="">
-                <option value="pool.sks-keyservers.net" selected="selected">Default (pool.sks-keyservers.net)</option>
-                <option value="pgp.uni-mainz.de">Uni Mainz</option>
-                <option value="gpg.mit.edu">MIT</option>
-            </select>
-            <label for="keyid" class="sr-only">Searchstring</label>
-            <input name="keyid" id="keyid" class="form-control" placeholder="Search for… (email, key-id, name)" required="" type="text" autofocus="">
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Fetch Key information</button>
-        </form>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Requirements</h2>
+                    <ol>
+                    <li class="card-text"><a href="https://phar.io/howto/generate-gpg-key.html">You have created your personal GPG-Key</a></li>
+                    <li class="card-text"><a href="https://phar.io/howto/uploading-public-keys.html">You have uploaded your public key to a keyserver</a></li>
+                    </ol>
+                    <p class="card-text">Don't forget to bring a photo-ID with you to the signing party!</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Search for a key</h2>
+                    <form class="card-text form-signin" data-op-form-id="0" method="GET" action="{{ path('key.search') }}">
+                        <div class="input-group mb-3 input-group-lg">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-server"></i></span>
+                            </div>
+                            <label for="keyserver" class="sr-only"></label>
+                            <select name="keyserver" id="keyserver" class="form-control" required="">
+                                <option value="pool.sks-keyservers.net" selected="selected">Default (pool.sks-keyservers.net)</option>
+                                <option value="pgp.uni-mainz.de">Uni Mainz</option>
+                                <option value="gpg.mit.edu">MIT</option>
+                            </select>
+                        </div>
+                        <div class="input-group input-group-lg mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-search"></i></span>
+                            </div>
+                            <label for="keyid" class="sr-only">Searchstring</label>
+                            <input name="keyid" id="keyid" class="form-control" placeholder="Search for… (email, key-id, name)" required="" type="text" autofocus="">
+                        </div>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Fetch Key information</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

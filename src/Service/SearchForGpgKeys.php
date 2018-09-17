@@ -18,7 +18,7 @@ class SearchForGpgKeys
 {
     public function __invoke($server, $keyid)
     {
-        $importCommand = 'gpg2 -vvvv --keyserver-options=debug --batch --yes --always-trust --keyserver %1$s --search-keys %2$s 2>&1';
+        $importCommand = 'gpg2 -vvvv --keyid-format LONG --batch --yes --always-trust --keyserver %1$s --search-keys %2$s 2>&1';
         exec(sprintf(
             $importCommand,
             escapeshellarg($server),
