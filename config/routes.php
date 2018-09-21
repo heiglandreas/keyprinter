@@ -38,7 +38,7 @@ use Zend\Expressive\MiddlewareFactory;
  */
 return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container) : void {
     $app->get('/', HomePageHandler::class, 'home');
-    $app->get('/key/print/{keyserver}/{keyid}', KeyPrintHandler::class, 'key.print');
+    $app->get('/key/print/{keyserver}/{keyid}.{type}', KeyPrintHandler::class, 'key.print');
     $app->get('/key/search', KeySearchHandler::class, 'key.search');
     $app->get('/api/ping', PingHandler::class, 'api.ping');
 };

@@ -40,7 +40,7 @@ class FetchGpgKeyDetails
             'keytype' => '',
             'uid' => '',
             'fingerprint' => '',
-            'expires' => new DateTimeImmutable(),
+            'expires' => null,
         ];
 
         if (! isset($key[0]['subkeys'])) {
@@ -54,7 +54,9 @@ class FetchGpgKeyDetails
 
             $infos['uid'] = $item['keyid'];
             $infos['fingerprint'] = $item['fingerprint'];
-            $infos['expires'] = new DateTimeImmutable('@' . $item['expires']);
+            if ($item['expires']) {
+                $infos['expires'] = new DateTimeImmutable('@' . $item['expires']);
+            }
         }
 
         $removeCommand = 'gpg2 --batch --yes --delete-key %1$s';

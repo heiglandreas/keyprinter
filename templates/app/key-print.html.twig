@@ -19,6 +19,7 @@
 
 {% block content %}
 
+    <a href="{{ path('key.print', {'keyserver':keyserver,'keyid':keyid,'type':'csv'}) }}" class="btn btn-primary d-print-none">Export CSV-File for Labelprinter</a>
     {% for i in 0..6 %}
     <div class="row">
         {% for k in 0..1 %}
@@ -38,7 +39,7 @@
                 </tr>
                 <tr>
                     <th>Exires</th>
-                    <td>{{ expires | date('c') }}</td>
+                    <td>{%  if expires %}{{ expires | date('c') }}{% else %}never{% endif %}</td>
                 </tr>
                 <tr>
                     <th>Key-Info matches?</th>

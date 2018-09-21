@@ -53,6 +53,7 @@ class KeySearchHandler implements RequestHandlerInterface
             $parameters = [
                 'keyserver' => urlencode($query['keyserver']),
                 'keyid'     => urlencode($results[0]['keyid']),
+                'type'      => 'html',
             ];
             $url        = $this->urlHelper->generate('key.print', $parameters);
 

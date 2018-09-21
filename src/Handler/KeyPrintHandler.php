@@ -37,6 +37,13 @@ class KeyPrintHandler implements RequestHandlerInterface
         $keyid     = urldecode($request->getAttribute('keyid'));
 
         $data = ($this->fetchGpgKeyDetails)($serverurl, $keyid);
+        $data['keyserver'] = $serverurl;
+        $data['keyid']     = $keyid;
+
+        if ($request->getAttribute('type') === 'csv') {
+            $response = new HtmlResponse($this->template->render('app::key-csv', $data));
+            return $response->withHeader('Content-Type', 'text/csv');
+        }
 
         return new HtmlResponse($this->template->render('app::key-print', $data));
     }

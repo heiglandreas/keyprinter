@@ -1,0 +1,4 @@
+owner;fingerprint;expires
+{% for i in 0..13 %}
+"{{ name }} ({{ email }})";"{{ fingerprint| hexformat }}";"{%  if expires %}{{ expires | date('d.m.Y H:i:s P') }}{% else %} {% endif %}"
+{% endfor %}
