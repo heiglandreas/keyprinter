@@ -38,7 +38,7 @@
                     <td>{{ fingerprint| chunksplit(20, "\n\r") | hexformat | nl2br }}</td>
                 </tr>
                 <tr>
-                    <th>Exires</th>
+                    <th>Expires</th>
                     <td>{%  if expires %}{{ expires | date('c') }}{% else %}never{% endif %}</td>
                 </tr>
                 <tr>
