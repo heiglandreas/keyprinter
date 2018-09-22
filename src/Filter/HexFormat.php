@@ -9,26 +9,20 @@
 
 namespace Org_Heigl\KeyPrinter\Filter;
 
-use Twig_Environment;
-use Twig_Filter;
+use function trim;
+use function explode;
+use function chunk_split;
+use function implode;
 
 class HexFormat
 {
     const NAME = 'hexformat';
 
-    public function __construct(Twig_Environment $environment)
-    {
-        $environment->addFilter(new Twig_Filter(
-            self::NAME,
-            [$this, '__invoke']
-        ));
-    }
-
     public function __invoke(string $string) : string
     {
         $lines = [];
         foreach (explode("\n", $string) as $line) {
-            $lines[] = chunk_split(trim($line),4, ' ');
+            $lines[] = trim(chunk_split(trim($line),4, ' '));
         }
 
         return implode("\r\n", $lines);

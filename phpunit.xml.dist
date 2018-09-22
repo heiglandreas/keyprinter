@@ -4,8 +4,8 @@
          bootstrap="vendor/autoload.php"
          colors="true">
     <testsuites>
-        <testsuite name="App\\Tests">
-            <directory>./test</directory>
+        <testsuite name="KeyPrint Tests">
+            <directory>./tests</directory>
         </testsuite>
     </testsuites>
 

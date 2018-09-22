@@ -26,8 +26,6 @@ class FetchGpgKeyDetails
         ), $result, $return);
 
         if ($return !== 0) {
-            error_log($return);
-            error_log(print_r($result, true));
             throw new UnexpectedValueException(implode ("\n", $result));
         }
 
@@ -44,7 +42,6 @@ class FetchGpgKeyDetails
         ];
 
         if (! isset($key[0]['subkeys'])) {
-            error_log(print_r($key, true));
             throw new UnexpectedValueException('No Subkeys available');
         }
         foreach ($key[0]['subkeys'] as $item) {

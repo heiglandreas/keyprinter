@@ -19,6 +19,7 @@ use Org_Heigl\KeyPrinter\Service\FetchGpgKeyDetails;
 use Org_Heigl\KeyPrinter\Service\SearchForGpgKeys;
 use Twig_Environment;
 use Twig_Extension;
+use Twig_Filter;
 use Zend\Expressive\Helper\ServerUrlHelper;
 use Zend\Expressive\Helper\UrlHelper;
 use Zend\Expressive\Router\RouterInterface;
@@ -177,8 +178,8 @@ class ConfigProvider
 
         $env = $factory(BeanFactoryRegistry::getInstance());
 
-        new ChunkSplit($env);
-        new HexFormat($env);
+        $env->addFilter(new Twig_Filter(ChunkSplit::NAME, [new ChunkSplit(), '__invoke']));
+        $env->addFilter(new Twig_Filter(HexFormat::NAME, [new HexFormat(), '__invoke']));
 
         return $env;
     }
