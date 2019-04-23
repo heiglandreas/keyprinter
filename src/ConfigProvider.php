@@ -17,9 +17,10 @@ use Org_Heigl\KeyPrinter\Handler\KeySearchHandler;
 use Org_Heigl\KeyPrinter\Handler\PingHandler;
 use Org_Heigl\KeyPrinter\Service\FetchGpgKeyDetails;
 use Org_Heigl\KeyPrinter\Service\SearchForGpgKeys;
-use Twig_Environment;
-use Twig_Extension;
-use Twig_Filter;
+use Twig\Environment;
+use Twig\Extension;
+use Twig\Filter;
+use Twig\TwigFilter;
 use Zend\Expressive\Helper\ServerUrlHelper;
 use Zend\Expressive\Helper\UrlHelper;
 use Zend\Expressive\Router\RouterInterface;
@@ -157,7 +158,7 @@ class ConfigProvider
     /**
      * @Bean({"aliases" = {
      *     @Alias({"name" = "Zend\Expressive\Template\TemplateRendererInterface"}),
-     *     @Alias({"name" = "Twig_Renderer"})
+     *     @Alias({"name" = "Twig\Renderer"})
      * }})
      */
     public function getTemplateRendererInterface() : TemplateRendererInterface
@@ -169,17 +170,17 @@ class ConfigProvider
 
     /**
      * @Bean({"aliases" = {
-     *     @Alias({"name" = "Twig_Environment"})
+     *     @Alias({"name" = "Twig\Environment"})
      * }})
      */
-    public function getTwigEnvironment() : Twig_Environment
+    public function getTwigEnvironment() : Environment
     {
         $factory = new TwigEnvironmentFactory();
 
         $env = $factory(BeanFactoryRegistry::getInstance());
 
-        $env->addFilter(new Twig_Filter(ChunkSplit::NAME, [new ChunkSplit(), '__invoke']));
-        $env->addFilter(new Twig_Filter(HexFormat::NAME, [new HexFormat(), '__invoke']));
+        $env->addFilter(new TwigFilter(ChunkSplit::NAME, [new ChunkSplit(), '__invoke']));
+        $env->addFilter(new TwigFilter(HexFormat::NAME, [new HexFormat(), '__invoke']));
 
         return $env;
     }
@@ -188,10 +189,10 @@ class ConfigProvider
 
     /**
      * @Bean({"aliases" = {
-     *     @Alias({"name" = "Twig_Extension"})
+     *     @Alias({"name" = "Twig\Extension\ExtensionInterface"})
      * }})
      */
-    public function getTwigExtension() : Twig_Extension
+    public function getTwigExtension() : Extension\ExtensionInterface
     {
         $factory = new TwigExtensionFactory();
 
